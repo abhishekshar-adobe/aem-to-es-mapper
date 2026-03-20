@@ -1,0 +1,287 @@
+{
+  "ESC_CONTENTLOG": { "type": "field", "source": "ey:content-log" },
+  "ESC_CONTENTTYPE": { "type": "field", "source": "ey:content-type" },
+  "ESC_CQ_TAGS": { "type": "field", "source": "cq:tagId" },
+  "ESC_EYAEMID": { "type": "field", "source": "ey:id" },
+  "ESC_EYCONTENTSTATUS": { "type": "field", "source": "ey:content-status" },
+  "ESC_EYDESCRIPTION": { "type": "field", "source": "jcr:description" },
+  "ESC_EYENTITY": { "type": "field", "source": "ey:ey-entity" },
+  "ESC_EYKOPPORTUNITYID": { "type": "field", "source": "ey:opportunity-id" },
+  "ESC_EYKREQUESTID": { "type": "field", "source": "ey:submission-id" },
+  "ESC_EYLEGACYID": { "type": "field", "source": "ey:legacy-id" },
+  "ESC_EYKNOWLEDGECONTACT": { "type": "field", "source": "ey:contactFullName" },
+  "ESC_EYKNOWLEDGECONTACTEMAIL": { "type": "field", "source": "ey:contact" },
+  "ESC_EXTENDCOUNT": { "type": "field", "source": "ey:extend-count" },
+  "ESC_SUBMITTEREMAIL": { "type": "field", "source": "ey:submitter-email" },
+  "ESC_TITLE": { "type": "field", "source": "jcr:title" },
+  "escbase_id": { "type": "field", "source": "jcr:path" },
+  "escbase_title": { "type": "field", "source": "jcr:title" },
+  "escbase_url": { "type": "field", "source": "ey:publishedShortURL" },
+  "escbase_contentsource": { "type": "field", "source": "Discover_AEM" },
+  "escbase_datastoretypename": { "type": "field", "source": "ey:content-type" },
+  "ESC_EY_LEGACY_ID": { "type": "field", "source": "ey:legacy-id" },
+  "ESC_EY_SUBMISSION_ID": { "type": "field", "source": "ey:submission-id" },
+
+  "ESC_CATEGORY": {
+    "type": "tag",
+    "tagType": "category",
+    "source": "cq:tags.jcr:title"
+  },
+  "ESC_CLIENTTYPE": {
+    "type": "tag",
+    "tagType": "client-type",
+    "source": "cq:tags.jcr:title"
+  },
+  "ESC_CONTENTLANGUAGE": {
+    "type": "tag",
+    "tagType": "language",
+    "source": "cq:tags.jcr:title"
+  },
+  "ESC_CONTENTLANGUAGEUID": {
+    "type": "tag",
+    "tagType": "language",
+    "source": "cq:tag.cq:tagId"
+  },
+  "ESC_CONTENTLIFECYCLEOWNERS": {
+    "type": "tag",
+    "tagType": "content-lifecycle-owner",
+    "source": "cq:tags.jcr:title"
+  },
+  "ESC_CONTENTLIFECYCLEOWNERSUID": {
+    "type": "tag",
+    "tagType": "content-lifecycle-owner",
+    "source": "cq:tag.cq:tagId"
+  },
+  "ESC_EYBUYER": {
+    "type": "tag",
+    "tagType": "buyer",
+    "source": "cq:tags.jcr:title"
+  },
+  "ESC_EYCONTENTTYPE": {
+    "type": "tag",
+    "tagType": "category",
+    "source": "cq:tags.jcr:title"
+  },
+  "ESC_EYISSUES": {
+    "type": "tag",
+    "tagType": "solution",
+    "source": "cq:tags.jcr:title"
+  },
+  "ESC_EYISSUESUID": {
+    "type": "tag",
+    "tagType": "solution",
+    "source": "cq:tag.cq:tagId"
+  },
+  "ESC_EYKSOLUTIONALLIANCES": {
+    "type": "tag",
+    "tagType": "ey-partner-ecosystem",
+    "source": "cq:tags.jcr:title"
+  },
+  "ESC_EYKSOLUTIONALLIANCESUID": {
+    "type": "tag",
+    "tagType": "ey-partner-ecosystem",
+    "source": "cq:tag.cq:tagId"
+  },
+  "ESC_EYMARKETSEGMENT": {
+    "type": "tag",
+    "tagType": "market-segments",
+    "source": "cq:tags.jcr:title"
+  },
+  "ESC_GEOGRAPHICAPPLICABILITY": {
+    "type": "tag",
+    "tagType": "geography",
+    "source": "cq:tags.jcr:title"
+  },
+  "ESC_GEOGRAPHICAPPLICABILITYUID": {
+    "type": "tag",
+    "tagType": "geography",
+    "source": "cq:tag.cq:tagId"
+  },
+  "ESC_MANAGEDSERVICES": {
+    "type": "tag",
+    "tagType": "managed-services",
+    "source": "cq:tags.jcr:title"
+  },
+  "ESC_ORIGIN": {
+    "type": "tag",
+    "tagType": "geography",
+    "source": "cq:tags.jcr:title"
+  },
+  "ESC_ORIGINUID": {
+    "type": "tag",
+    "tagType": "geography",
+    "source": "cq:tag.cq:tagId"
+  },
+  "ESC_SECTOR": {
+    "type": "tag",
+    "tagType": "industry",
+    "source": "cq:tags.jcr:title"
+  },
+  "ESC_SECTORUID": {
+    "type": "tag",
+    "tagType": "industry",
+    "source": "cq:tag.cq:tagId"
+  },
+  "ESC_SERVICELINEFUNCTION": {
+    "type": "tag",
+    "tagType": "service-line",
+    "source": "cq:tags.jcr:title"
+  },
+  "ESC_SERVICELINEFUNCTIONUID": {
+    "type": "tag",
+    "tagType": "service-line",
+    "source": "cq:tag.cq:tagId"
+  },
+  "ESC_TECHPRODUCTS": {
+    "type": "tag",
+    "tagType": "technology-products",
+    "source": "cq:tags.jcr:title"
+  },
+  "ESC_TOPIC": {
+    "type": "tag",
+    "tagType": "topic",
+    "source": "cq:tags.jcr:title"
+  },
+  "ESC_GEOGRAPHICAPPLICABILITY_ALT_LABEL": {
+    "type": "tag",
+    "tagType": "geography",
+    "source": "cq:tags.jcr:title"
+  },
+  "ESC_ORIGIN_ALT_LABEL": {
+    "type": "tag",
+    "tagType": "geography",
+    "source": "cq:tags.cq:tagId"
+  },
+  "ESC_EYCONTENTTYPEUID": {
+    "type": "tag",
+    "tagType": "category",
+    "source": "cq:tag.cq:tagId"
+  },
+  "ESC_CATEGORYUID": {
+    "type": "tag",
+    "tagType": "language",
+    "source": "cq:tag.cq:tagId"
+  },
+
+  "ESC_CATEGORYUFPATH": { "type": "tag_path", "tagType": "category" },
+  "ESC_CONTENTLANGUAGEUFPATH": { "type": "tag_path", "tagType": "language" },
+  "ESC_CONTENTLIFECYCLEOWNERSUFPATH": {
+    "type": "tag_path",
+    "tagType": "content-lifecycle-owner"
+  },
+  "ESC_EYCONTENTTYPEUFPATH": { "type": "tag_path", "tagType": "category" },
+  "ESC_EYISSUESUFPATH": { "type": "tag_path", "tagType": "solution" },
+  "ESC_EYKSOLUTIONALLIANCESUFPATH": {
+    "type": "tag_path",
+    "tagType": "ey-partner-ecosystem"
+  },
+  "ESC_GEOGRAPHICAPPLICABILITYUFPATH": {
+    "type": "tag_path",
+    "tagType": "geography"
+  },
+  "ESC_ORIGINUFPATH": { "type": "tag_path", "tagType": "geography" },
+  "ESC_SECTORUFPATH": { "type": "tag_path", "tagType": "industry" },
+  "ESC_SERVICELINEFUNCTIONUFPATH": {
+    "type": "tag_path",
+    "tagType": "service-line"
+  },
+
+  "ESC_CATEGORY_HIDDEN_LABEL": {
+    "type": "concept_tree",
+    "tagType": "category"
+  },
+  "ESC_CONTENTLIFECYCLEOWNERS_HIDDEN_LABEL": {
+    "type": "concept_tree",
+    "tagType": "content-lifecycle-owner"
+  },
+  "ESC_EYCONTENTTYPE_HIDDEN_LABEL": {
+    "type": "concept_tree",
+    "tagType": "category"
+  },
+  "ESC_EYISSUES_HIDDEN_LABEL": {
+    "type": "concept_tree",
+    "tagType": "service-line"
+  },
+  "ESC_GEOGRAPHICAPPLICABILITY_HIDDEN_LABEL": {
+    "type": "concept_tree",
+    "tagType": "geography"
+  },
+  "ESC_ORIGIN_HIDDEN_LABEL": { "type": "concept_tree", "tagType": "geography" },
+  "ESC_SECTOR_HIDDEN_LABEL": { "type": "concept_tree", "tagType": "industry" },
+  "ESC_SERVICELINEFUNCTION_HIDDEN_LABEL": {
+    "type": "concept_tree",
+    "tagType": "service-line"
+  },
+
+  "ESC_CREATED": { "type": "rule", "rule": { "ruleName": "ParseDate" } },
+  "ESC_CREATEDDATE": { "type": "rule", "rule": { "ruleName": "ParseDate" } },
+  "ESC_ENTERPRISEKEYWORDS": {
+    "type": "rule",
+    "rule": { "ruleName": "SplitKeywords" }
+  },
+  "ESC_EXPIRYDATE": { "type": "rule", "rule": { "ruleName": "ParseDate" } },
+  "ESC_EXTENDDATE": { "type": "rule", "rule": { "ruleName": "ParseDate" } },
+  "ESC_EYDOCUMENTID": {
+    "type": "rule",
+    "rule": { "ruleName": "ResolveLegacyOrId" }
+  },
+  "ESC_EYKENDORSEDBY": {
+    "type": "rule",
+    "rule": { "ruleName": "SplitEndorsements" }
+  },
+  "ESC_EYFLAGSHIP": { "type": "rule", "rule": { "ruleName": "BooleanField" } },
+  "ESC_EYMAJORPUBDATE": { "type": "rule", "rule": { "ruleName": "ParseDate" } },
+  "ESC_LASTUPDATED": { "type": "rule", "rule": { "ruleName": "ParseDate" } },
+  "ESC_MODIFIED": { "type": "rule", "rule": { "ruleName": "ParseDate" } },
+  "ESC_ISTOMBSTONE": { "type": "rule", "rule": { "ruleName": "BooleanField" } },
+  "ESC_VERTICAL": { "type": "rule", "rule": { "ruleName": "MapVertical" } },
+  "EYKIsEndorsed": { "type": "rule", "rule": { "ruleName": "IsEndorsed" } },
+  "EY_CONTENT_RESTRICTION": {
+    "type": "rule",
+    "rule": { "ruleName": "ContentRestriction" }
+  },
+  "ForContentAgeCalc": { "type": "rule", "rule": { "ruleName": "ContentAge" } },
+  "ResultType": { "type": "rule", "rule": { "ruleName": "MapResultType" } },
+  "ESC_AEMFULLPATH": { "type": "rule", "rule": { "ruleName": "BuildAEMUrl" } },
+
+  "ESC_EYCONTACT": {
+    "type": "rule",
+    "source": "root/container-body-outer/container-body/.../contacts",
+    "rule": { "ruleName": "ExtractContacts" }
+  },
+  "ESC_EYCONTACTEMAIL": {
+    "type": "rule",
+    "source": "root/container-body-outer/container-body/.../contacts",
+    "rule": { "ruleName": "ExtractContactEmails" }
+  },
+  "ESC_SOLUTIONLEADERS": {
+    "type": "rule",
+    "source": "root/container-body-outer/container-body/.../sling:resourceType",
+    "rule": { "ruleName": "ExtractSolutionLeaders" }
+  },
+  "ESC_SOLUTIONLEADERSEMAIL": {
+    "type": "rule",
+    "source": "root/container-body-outer/container-body/.../sling:resourceType",
+    "rule": { "ruleName": "ExtractSolutionLeaderEmails" }
+  },
+  "ESC_EYABSTRACT": {
+    "type": "rule",
+    "source": "root/container-body-outer/container-body/.../contentabstract",
+    "rule": { "ruleName": "ExtractAbstract" }
+  },
+  "ESC_EYEYAUTHORS": {
+    "type": "rule",
+    "source": "root/container-body-outer/container-body/.../authors",
+    "rule": { "ruleName": "ExtractAuthors" }
+  },
+  "ESC_EYEYAUTHORSEMAIL": {
+    "type": "rule",
+    "source": "root/container-body-outer/container-body/.../authors",
+    "rule": { "ruleName": "ExtractAuthorsEmail" }
+  },
+  "ESC_EYLASTMODIFIED": {
+    "type": "rule",
+    "source": "cq:lastModified",
+    "rule": { "ruleName": "ParseDate" }
+  }
+}
