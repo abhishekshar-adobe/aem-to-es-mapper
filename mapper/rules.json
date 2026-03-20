@@ -1,7 +1,7 @@
 {
   "ESC_CONTENTLOG": { "type": "field", "source": "ey:content-log" },
   "ESC_CONTENTTYPE": { "type": "field", "source": "ey:content-type" },
-  "ESC_CQ_TAGS": { "type": "field", "source": "cq:tagId" },
+  "ESC_CQ_TAGS": { "type": "field", "source": "cq:tags" },
   "ESC_EYAEMID": { "type": "field", "source": "ey:id" },
   "ESC_EYCONTENTSTATUS": { "type": "field", "source": "ey:content-status" },
   "ESC_EYDESCRIPTION": { "type": "field", "source": "jcr:description" },
@@ -244,44 +244,37 @@
   "ResultType": { "type": "rule", "rule": { "ruleName": "MapResultType" } },
   "ESC_AEMFULLPATH": { "type": "rule", "rule": { "ruleName": "BuildAEMUrl" } },
 
-  "ESC_EYCONTACT": {
-    "type": "rule",
-    "source": "root/container-body-outer/container-body/.../contacts",
-    "rule": { "ruleName": "ExtractContacts" }
-  },
-  "ESC_EYCONTACTEMAIL": {
-    "type": "rule",
-    "source": "root/container-body-outer/container-body/.../contacts",
-    "rule": { "ruleName": "ExtractContactEmails" }
-  },
-  "ESC_SOLUTIONLEADERS": {
-    "type": "rule",
-    "source": "root/container-body-outer/container-body/.../sling:resourceType",
-    "rule": { "ruleName": "ExtractSolutionLeaders" }
-  },
-  "ESC_SOLUTIONLEADERSEMAIL": {
-    "type": "rule",
-    "source": "root/container-body-outer/container-body/.../sling:resourceType",
-    "rule": { "ruleName": "ExtractSolutionLeaderEmails" }
-  },
-  "ESC_EYABSTRACT": {
-    "type": "rule",
-    "source": "root/container-body-outer/container-body/.../contentabstract",
-    "rule": { "ruleName": "ExtractAbstract" }
-  },
-  "ESC_EYEYAUTHORS": {
-    "type": "rule",
-    "source": "root/container-body-outer/container-body/.../authors",
-    "rule": { "ruleName": "ExtractAuthors" }
-  },
-  "ESC_EYEYAUTHORSEMAIL": {
-    "type": "rule",
-    "source": "root/container-body-outer/container-body/.../authors",
-    "rule": { "ruleName": "ExtractAuthorsEmail" }
-  },
   "ESC_EYLASTMODIFIED": {
     "type": "rule",
     "source": "cq:lastModified",
     "rule": { "ruleName": "ParseDate" }
+  },
+  "ESC_EYCONTACT": {
+    "type": "rule",
+    "rule": { "ruleName": "ExtractContacts" }
+  },
+  "ESC_EYCONTACTEMAIL": {
+    "type": "rule",
+    "rule": { "ruleName": "ExtractContactEmails" }
+  },
+  "ESC_SOLUTIONLEADERS": {
+    "type": "rule",
+    "rule": { "ruleName": "ExtractSolutionLeaders" }
+  },
+  "ESC_SOLUTIONLEADERSEMAIL": {
+    "type": "rule",
+    "rule": { "ruleName": "ExtractSolutionLeaderEmails" }
+  },
+  "ESC_EYABSTRACT": {
+    "type": "rule",
+    "rule": { "ruleName": "ExtractAbstract" }
+  },
+  "ESC_EYEYAUTHORS": {
+    "type": "rule",
+    "rule": { "ruleName": "ExtractAuthors" }
+  },
+  "ESC_EYEYAUTHORSEMAIL": {
+    "type": "rule",
+    "rule": { "ruleName": "ExtractAuthorsEmail" }
   }
 }

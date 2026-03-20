@@ -1,6 +1,23 @@
 {
   "ESC_CONTENTLOG": " LastReviewDate: 06/09/2022 05:11:02; ArchiveHistoryLog: Extended: Nisha Jaichand|5/26/2021 3:47:01 PM;Extended: Karen Zetts|9/6/2022 3:11:02 AM; ;knd20011m3ajxby6 pre-archived and published on 06/03/2025 22:00:26 by System",
   "ESC_CONTENTTYPE": "EY Knowledge Document",
+  "ESC_CQ_TAGS": [
+    "{\"cq:tagId\":\"geography:emeia/mena\",\"jcr:path\":\"/content/cq:tags/geography/emeia/mena\",\"jcr:title\":\"MENA\",\"uri\":\"https://taxonomy.ey.com/Enterprise/1998\",\"value\":\"geography:emeia/mena\"}",
+    "{\"cq:tagId\":\"ey-partner-ecosystem:s360-alliance-partners/sap/sap-s4-hana\",\"jcr:path\":\"/content/cq:tags/ey-partner-ecosystem/s360-alliance-partners/sap/sap-s4-hana\",\"jcr:title\":\"SAP S4 HANA\",\"uri\":\"https://taxonomy.ey.com/Enterprise/1176\",\"value\":\"ey-partner-ecosystem:type-1-globally-sponsored-alliances/sap/sap-s4-hana\"}",
+    "{\"cq:tagId\":\"solution:fields-of-play/finance-fop\",\"jcr:path\":\"/content/cq:tags/solution/fields-of-play/finance-fop\",\"jcr:title\":\"Finance FoP\",\"uri\":\"https://taxonomy.ey.com/Enterprise/700\",\"value\":\"solution:fields-of-play/finance-fop\"}",
+    "{\"cq:tagId\":\"geography:emeia/europe-west\",\"jcr:path\":\"/content/cq:tags/geography/emeia/europe-west\",\"jcr:title\":\"Europe West\",\"uri\":\"https://taxonomy.ey.com/Enterprise/1950\",\"value\":\"geography:emeia/europe-west\"}",
+    "{\"cq:tagId\":\"geography:emeia/uki\",\"jcr:path\":\"/content/cq:tags/geography/emeia/uki\",\"jcr:title\":\"UK&I\",\"uri\":\"https://taxonomy.ey.com/Enterprise/2027\",\"value\":\"geography:emeia/uk-and-ireland\"}",
+    "{\"cq:tagId\":\"language:english\",\"jcr:path\":\"/content/cq:tags/language/english\",\"jcr:title\":\"English\",\"uri\":\"https://taxonomy.ey.com/Enterprise/2048\",\"value\":\"language:english\"}",
+    "{\"cq:tagId\":\"service-line:consulting/technology-consulting/platforms/sector-technologies-and-platforms/requirements-definition\",\"jcr:path\":\"/content/cq:tags/service-line/consulting/technology-consulting/platforms/sector-technologies-and-platforms/requirements-definition\",\"jcr:title\":\"Requirements Definition\",\"uri\":\"https://taxonomy.ey.com/Enterprise/2544\",\"value\":\"service-line:consulting/technology-solution-delivery/technology-implementation-support/requirements-definition\"}",
+    "{\"cq:tagId\":\"content-lifecycle-owner:consumer--health\",\"jcr:path\":\"/content/cq:tags/content-lifecycle-owner/consumer--health\",\"jcr:title\":\"Consumer & Health\",\"uri\":\"https://taxonomy.ey.com/Discover_CMS/410\",\"value\":\"content-lifecycle-owner:health-sciences-and-wellness\"}",
+    "{\"cq:tagId\":\"content-lifecycle-owner:consulting\",\"jcr:path\":\"/content/cq:tags/content-lifecycle-owner/consulting\",\"jcr:title\":\"Consulting\",\"uri\":\"https://taxonomy.ey.com/Discover_CMS/364\",\"value\":\"content-lifecycle-owner:consulting\"}",
+    "{\"cq:tagId\":\"geography:emeia/africa-india\",\"jcr:path\":\"/content/cq:tags/geography/emeia/africa-india\",\"jcr:title\":\"Africa India\",\"uri\":\"https://taxonomy.ey.com/Enterprise/1993\",\"value\":\"geography:emeia/india-region\"}",
+    "{\"cq:tagId\":\"geography:emeia/europe-central\",\"jcr:path\":\"/content/cq:tags/geography/emeia/europe-central\",\"jcr:title\":\"Europe Central\",\"uri\":\"https://taxonomy.ey.com/Enterprise/1915\",\"value\":\"geography:emeia/cesa\"}",
+    "{\"cq:tagId\":\"category:deliver/deliverables\",\"jcr:path\":\"/content/cq:tags/category/deliver/deliverables\",\"jcr:title\":\"Deliverables\",\"uri\":\"https://taxonomy.ey.com/Enterprise/1694\",\"value\":\"category:deliver/deliverables\"}",
+    "{\"cq:tagId\":\"industry:consumer-and-health/life-sciences\",\"jcr:path\":\"/content/cq:tags/industry/consumer-and-health/life-sciences\",\"jcr:title\":\"Life Sciences\",\"uri\":\"https://taxonomy.ey.com/Enterprise/10\",\"value\":\"industry:health-sciences-and-wellness/life-sciences\"}",
+    "{\"cq:tagId\":\"industry:consumer-and-health\",\"jcr:path\":\"/content/cq:tags/industry/consumer-and-health\",\"jcr:title\":\"Consumer and Health\",\"uri\":\"https://taxonomy.ey.com/Enterprise/1\",\"value\":\"industry:health-sciences-and-wellness\"}",
+    "{\"cq:tagId\":\"industry:consumer-and-health/life-sciences/pharmaceutical-and-contract-manufacturing\",\"jcr:path\":\"/content/cq:tags/industry/consumer-and-health/life-sciences/pharmaceutical-and-contract-manufacturing\",\"jcr:title\":\"Pharmaceutical and Contract Manufacturing\",\"uri\":\"https://taxonomy.ey.com/Enterprise/12\",\"value\":\"industry:health-sciences-and-wellness/life-sciences/pharmaceutical-and-contract-manufacturing\"}"
+  ],
   "ESC_EYAEMID": "knd20011m3ajxby6",
   "ESC_EYCONTENTSTATUS": "Publish",
   "ESC_EYDESCRIPTION": "This document is the Functional Requirement Specification that describes the functionalities of the Sales & Distribution Module of SAP S/4 HANA System. An approved URS acts as an input to this document. This document shall form the basis for the software design specification document and operational qualification testing for the system so as to meet business requirements as well as compliance with applicable regulatory requirements. <br/><br/>Part of work product for upgrading from SAP application to S/4 HANA to enhance business processes and IT Infrastructure and planning other strategies for achieving organization’s growth and future vision in pharmaceutical sector.",
@@ -25,33 +42,31 @@
     "English"
   ],
   "ESC_CONTENTLANGUAGEUID": [
-    "English"
+    "language:english"
   ],
   "ESC_CONTENTLIFECYCLEOWNERS": [
     "Consumer & Health",
     "Consulting"
   ],
   "ESC_CONTENTLIFECYCLEOWNERSUID": [
-    "Consumer & Health",
-    "Consulting"
+    "content-lifecycle-owner:consumer--health",
+    "content-lifecycle-owner:consulting"
   ],
   "ESC_EYBUYER": [],
   "ESC_EYCONTENTTYPE": [
     "Deliverables"
   ],
   "ESC_EYISSUES": [
-    "Finance FoP",
-    "Requirements Definition"
+    "Finance FoP"
   ],
   "ESC_EYISSUESUID": [
-    "Finance FoP",
-    "Requirements Definition"
+    "solution:fields-of-play/finance-fop"
   ],
   "ESC_EYKSOLUTIONALLIANCES": [
     "SAP S4 HANA"
   ],
   "ESC_EYKSOLUTIONALLIANCESUID": [
-    "SAP S4 HANA"
+    "ey-partner-ecosystem:s360-alliance-partners/sap/sap-s4-hana"
   ],
   "ESC_EYMARKETSEGMENT": [],
   "ESC_GEOGRAPHICAPPLICABILITY": [
@@ -62,11 +77,11 @@
     "Europe Central"
   ],
   "ESC_GEOGRAPHICAPPLICABILITYUID": [
-    "MENA",
-    "Europe West",
-    "UK&I",
-    "Africa India",
-    "Europe Central"
+    "geography:emeia/mena",
+    "geography:emeia/europe-west",
+    "geography:emeia/uki",
+    "geography:emeia/africa-india",
+    "geography:emeia/europe-central"
   ],
   "ESC_MANAGEDSERVICES": [],
   "ESC_ORIGIN": [
@@ -77,11 +92,11 @@
     "Europe Central"
   ],
   "ESC_ORIGINUID": [
-    "MENA",
-    "Europe West",
-    "UK&I",
-    "Africa India",
-    "Europe Central"
+    "geography:emeia/mena",
+    "geography:emeia/europe-west",
+    "geography:emeia/uki",
+    "geography:emeia/africa-india",
+    "geography:emeia/europe-central"
   ],
   "ESC_SECTOR": [
     "Life Sciences",
@@ -89,15 +104,15 @@
     "Pharmaceutical and Contract Manufacturing"
   ],
   "ESC_SECTORUID": [
-    "Life Sciences",
-    "Consumer and Health",
-    "Pharmaceutical and Contract Manufacturing"
+    "industry:consumer-and-health/life-sciences",
+    "industry:consumer-and-health",
+    "industry:consumer-and-health/life-sciences/pharmaceutical-and-contract-manufacturing"
   ],
   "ESC_SERVICELINEFUNCTION": [
     "Requirements Definition"
   ],
   "ESC_SERVICELINEFUNCTIONUID": [
-    "Requirements Definition"
+    "service-line:consulting/technology-consulting/platforms/sector-technologies-and-platforms/requirements-definition"
   ],
   "ESC_TECHPRODUCTS": [],
   "ESC_TOPIC": [],
@@ -109,17 +124,17 @@
     "Europe Central"
   ],
   "ESC_ORIGIN_ALT_LABEL": [
-    "MENA",
-    "Europe West",
-    "UK&I",
-    "Africa India",
-    "Europe Central"
+    "geography:emeia/mena",
+    "geography:emeia/europe-west",
+    "geography:emeia/uki",
+    "geography:emeia/africa-india",
+    "geography:emeia/europe-central"
   ],
   "ESC_EYCONTENTTYPEUID": [
-    "Deliverables"
+    "category:deliver/deliverables"
   ],
   "ESC_CATEGORYUID": [
-    "English"
+    "language:english"
   ],
   "ESC_CATEGORYUFPATH": [
     "Category",
@@ -509,5 +524,25 @@
   "ForContentAgeCalc": "2019-12-17T01:00:00.000Z",
   "ResultType": "Document",
   "ESC_AEMFULLPATH": "https://discovercontent.ey.net/content/cms/knowledge/knowledge-docs/2020/01/1/knd20011m3ajxby6.html",
-  "ESC_EYLASTMODIFIED": "2025-07-21T12:22:07.000Z"
+  "ESC_EYLASTMODIFIED": "2025-07-21T12:22:07.000Z",
+  "ESC_EYCONTACT": [
+    "Thomas Augustine"
+  ],
+  "ESC_EYCONTACTEMAIL": [
+    "Thomas.Augustine@in.ey.com"
+  ],
+  "ESC_SOLUTIONLEADERS": [
+    "Thomas Augustine"
+  ],
+  "ESC_SOLUTIONLEADERSEMAIL": [
+    "Thomas.Augustine@in.ey.com",
+    "Thomas.Augustine@in.ey.com"
+  ],
+  "ESC_EYABSTRACT": "This document is the Functional Requirement Specification that describes the functionalities of the Sales & Distribution Module of SAP S/4 HANA System. An approved URS acts as an input to this document. This document shall form the basis for the software design specification document and operational qualification testing for the system so as to meet business requirements as well as compliance with applicable regulatory requirements. <br/><br/>Part of work product for upgrading from SAP application to S/4 HANA to enhance business processes and IT Infrastructure and planning other strategies for achieving organization’s growth and future vision in pharmaceutical sector.",
+  "ESC_EYEYAUTHORS": [
+    "Thomas Augustine"
+  ],
+  "ESC_EYEYAUTHORSEMAIL": [
+    "Thomas.Augustine@in.ey.com"
+  ]
 }

@@ -34,14 +34,11 @@ function parseAemDate(value) {
 
   const str = String(value).trim();
 
-  // Try native parse first
   const direct = new Date(str);
   if (!Number.isNaN(direct.getTime())) {
     return direct.toISOString();
   }
 
-  // Try to normalize common GMT formats
-  // Example: Wed Mar 10 2021 12:00:00 GMT+0000
   const cleaned = str
     .replace(/'GMT'/g, "GMT")
     .replace(/\s+\(.*\)$/, "")
@@ -64,6 +61,10 @@ function buildAemUrlFromPath(ctx) {
   const p = getPath(ctx, "jcr:path");
   if (!isNonEmpty(p)) return undefined;
   return `https://discovercontent.ey.net${p}.html`;
+}
+
+function parseFlexibleDate(value) {
+  return parseAemDate(value);
 }
 
 /* -------------------- core rules -------------------- */
@@ -210,8 +211,34 @@ function BuildAEMUrl(ctx) {
   return buildAemUrlFromPath(ctx);
 }
 
+/* -------------------- flat-key helpers -------------------- */
 
-/* -------------------- extra helpers for nested sections -------------------- */
+function findFlatKeysEndingWith(doc, suffix) {
+  return Object.keys(doc || {}).filter((k) => k.endsWith(suffix));
+}
+
+function getItemIndex(key) {
+  const m = String(key).match(/\/item(\d+)(?:\/|$)/);
+  return m ? Number(m[1]) : Number.MAX_SAFE_INTEGER;
+}
+
+function sortKeysByItemIndex(keys) {
+  return [...keys].sort((a, b) => {
+    const ia = getItemIndex(a);
+    const ib = getItemIndex(b);
+    if (ia !== ib) return ia - ib;
+    return String(a).localeCompare(String(b));
+  });
+}
+
+function getParentPrefix(key, suffix) {
+  const idx = String(key).lastIndexOf(suffix);
+  return idx === -1 ? null : String(key).slice(0, idx);
+}
+
+function dedupeValues(values) {
+  return [...new Set((values || []).filter(isNonEmpty))];
+}
 
 function firstNonEmpty(values) {
   for (const v of values) {
@@ -220,208 +247,141 @@ function firstNonEmpty(values) {
   return undefined;
 }
 
-function walk(node, visitor) {
-  if (!node || typeof node !== 'object') return false;
+function collectValuesFromTitleSection(doc, {
+  titleSuffix,
+  titleValue,
+  valueSuffix,
+  dedupe = true,
+}) {
+  const results = [];
+  const titleKeys = sortKeysByItemIndex(findFlatKeysEndingWith(doc, titleSuffix));
+  const sectionPrefix = titleSuffix.replace(/\/title$/, "");
 
-  if (visitor(node)) return true;
+  for (const titleKey of titleKeys) {
+    if (doc[titleKey] !== titleValue) continue;
 
-  if (Array.isArray(node)) {
-    for (const item of node) {
-      if (walk(item, visitor)) return true;
+    const prefix = getParentPrefix(titleKey, titleSuffix);
+    if (!prefix) continue;
+
+    const valuePrefix = `${prefix}${sectionPrefix}/emailids/`;
+    const valueKeys = sortKeysByItemIndex(
+      Object.keys(doc).filter(
+        (k) => k.startsWith(valuePrefix) && k.endsWith(valueSuffix)
+      )
+    );
+
+    for (const k of valueKeys) {
+      if (isNonEmpty(doc[k])) results.push(doc[k]);
     }
-    return false;
   }
 
-  for (const key of Object.keys(node)) {
-    if (walk(node[key], visitor)) return true;
-  }
-
-  return false;
+  return results.length ? (dedupe ? dedupeValues(results) : results) : undefined;
 }
 
-function dedupeValues(values) {
-  return [...new Set((values || []).filter(isNonEmpty))];
-}
+function collectValuesFromResourceTypeSection(doc, {
+  resourceTypeValue,
+  valueSuffix,
+  dedupe = true,
+}) {
+  const results = [];
+  const resourceKeys = sortKeysByItemIndex(findFlatKeysEndingWith(doc, "/sling:resourceType"));
 
-function collectEmailIdValues(sectionNode, fieldName) {
-  const values = [];
+  for (const resourceKey of resourceKeys) {
+    if (doc[resourceKey] !== resourceTypeValue) continue;
 
-  walk(sectionNode, (node) => {
-    if (!node || typeof node !== 'object' || Array.isArray(node)) return false;
+    const prefix = getParentPrefix(resourceKey, "/sling:resourceType");
+    if (!prefix) continue;
 
-    const emailIds = node.emailids || node.emailIds || node.emailIdsList;
-    if (Array.isArray(emailIds)) {
-      for (const item of emailIds) {
-        if (item && isNonEmpty(item[fieldName])) {
-          values.push(item[fieldName]);
-        }
-      }
+    const valuePrefix = `${prefix}/emailids/`;
+    const valueKeys = sortKeysByItemIndex(
+      Object.keys(doc).filter(
+        (k) => k.startsWith(valuePrefix) && k.endsWith(valueSuffix)
+      )
+    );
+
+    for (const k of valueKeys) {
+      if (isNonEmpty(doc[k])) results.push(doc[k]);
     }
-
-    return false;
-  });
-
-  return dedupeValues(values);
-}
-
-function findFirstNodeByPredicate(doc, predicate) {
-  let found;
-
-  walk(doc, (node) => {
-    if (predicate(node)) {
-      found = node;
-      return true;
-    }
-    return false;
-  });
-
-  return found;
-}
-
-function parseFlexibleDate(value) {
-  if (!isNonEmpty(value)) return undefined;
-
-  const str = String(value).trim();
-
-  const direct = new Date(str);
-  if (!Number.isNaN(direct.getTime())) {
-    return direct.toISOString();
   }
 
-  const cleaned = str
-    .replace(/'GMT'/g, 'GMT')
-    .replace(/\s+\(.*\)$/, '')
-    .trim();
-
-  const secondTry = new Date(cleaned);
-  if (!Number.isNaN(secondTry.getTime())) {
-    return secondTry.toISOString();
-  }
-
-  return undefined;
+  return results.length ? (dedupe ? dedupeValues(results) : results) : undefined;
 }
 
 /* -------------------- new rule functions -------------------- */
 
 function ExtractContacts(ctx) {
-  const section = findFirstNodeByPredicate(ctx?.aemDoc, (node) => {
-    return (
-      node &&
-      typeof node === 'object' &&
-      !Array.isArray(node) &&
-      String(node.title || '').trim() === 'Contact' &&
-      node.emailids
-    );
+  return collectValuesFromTitleSection(ctx?.aemDoc, {
+    titleSuffix: "/contacts/title",
+    titleValue: "Contact",
+    valueSuffix: "/fullName",
+    dedupe: true,
   });
-
-  if (!section) return undefined;
-  return collectEmailIdValues(section, 'fullName');
 }
 
 function ExtractContactEmails(ctx) {
-  const section = findFirstNodeByPredicate(ctx?.aemDoc, (node) => {
-    return (
-      node &&
-      typeof node === 'object' &&
-      !Array.isArray(node) &&
-      String(node.title || '').trim() === 'Contact' &&
-      node.emailids
-    );
+  return collectValuesFromTitleSection(ctx?.aemDoc, {
+    titleSuffix: "/contacts/title",
+    titleValue: "Contact",
+    valueSuffix: "/multiEmail",
+    dedupe: true,
   });
-
-  if (!section) return undefined;
-  return collectEmailIdValues(section, 'multiEmail');
 }
 
 function ExtractSolutionLeaders(ctx) {
-  const section = findFirstNodeByPredicate(ctx?.aemDoc, (node) => {
-    return (
-      node &&
-      typeof node === 'object' &&
-      !Array.isArray(node) &&
-      String(node['sling:resourceType'] || '').trim() ===
-        'ey-internal-adobe-experience-app/components/contacts' &&
-      node.emailids
-    );
+  return collectValuesFromResourceTypeSection(ctx?.aemDoc, {
+    resourceTypeValue: "ey-internal-adobe-experience-app/components/contacts",
+    valueSuffix: "/fullName",
+    dedupe: true,
   });
-
-  if (!section) return undefined;
-  return collectEmailIdValues(section, 'fullName');
 }
 
 function ExtractSolutionLeaderEmails(ctx) {
-  const section = findFirstNodeByPredicate(ctx?.aemDoc, (node) => {
-    return (
-      node &&
-      typeof node === 'object' &&
-      !Array.isArray(node) &&
-      String(node['sling:resourceType'] || '').trim() ===
-        'ey-internal-adobe-experience-app/components/contacts' &&
-      node.emailids
-    );
+  return collectValuesFromResourceTypeSection(ctx?.aemDoc, {
+    resourceTypeValue: "ey-internal-adobe-experience-app/components/contacts",
+    valueSuffix: "/multiEmail",
+    dedupe: false,
   });
-
-  if (!section) return undefined;
-  return collectEmailIdValues(section, 'multiEmail');
 }
 
 function ExtractAuthors(ctx) {
-  const section = findFirstNodeByPredicate(ctx?.aemDoc, (node) => {
-    return (
-      node &&
-      typeof node === 'object' &&
-      !Array.isArray(node) &&
-      String(node.title || '').trim() === 'Authors' &&
-      node.emailids
-    );
+  return collectValuesFromTitleSection(ctx?.aemDoc, {
+    titleSuffix: "/authors/title",
+    titleValue: "Authors",
+    valueSuffix: "/fullName",
+    dedupe: true,
   });
-
-  if (!section) return undefined;
-  return collectEmailIdValues(section, 'fullName');
 }
 
 function ExtractAuthorsEmail(ctx) {
-  const section = findFirstNodeByPredicate(ctx?.aemDoc, (node) => {
-    return (
-      node &&
-      typeof node === 'object' &&
-      !Array.isArray(node) &&
-      String(node.title || '').trim() === 'Authors' &&
-      node.emailids
-    );
+  return collectValuesFromTitleSection(ctx?.aemDoc, {
+    titleSuffix: "/authors/title",
+    titleValue: "Authors",
+    valueSuffix: "/multiEmail",
+    dedupe: true,
   });
-
-  if (!section) return undefined;
-  return collectEmailIdValues(section, 'multiEmail');
 }
 
 function ExtractAbstract(ctx) {
-  const section = findFirstNodeByPredicate(ctx?.aemDoc, (node) => {
-    if (!node || typeof node !== 'object' || Array.isArray(node)) return false;
+  const doc = ctx?.aemDoc || {};
+  const titleKeys = sortKeysByItemIndex(findFlatKeysEndingWith(doc, "/contentabstract/title"));
 
-    const ca = node.contentabstract;
-    if (!ca) return false;
+  for (const titleKey of titleKeys) {
+    if (doc[titleKey] !== "Description") continue;
 
-    if (Array.isArray(ca)) {
-      return ca.some((item) => String(item?.title || '').trim() === 'Description');
-    }
+    const prefix = getParentPrefix(titleKey, "/contentabstract/title");
+    if (!prefix) continue;
 
-    return String(ca.title || '').trim() === 'Description';
-  });
+    const candidates = [
+      `${prefix}/contentabstract/description`,
+      `${prefix}/contentabstract/text`,
+      `${prefix}/contentabstract/rte`,
+    ];
 
-  if (!section || !section.contentabstract) return undefined;
-
-  const ca = section.contentabstract;
-
-  if (Array.isArray(ca)) {
-    for (const item of ca) {
-      const val = firstNonEmpty([item?.description, item?.text, item?.rte]);
-      if (isNonEmpty(val)) return val;
-    }
-    return undefined;
+    const value = firstNonEmpty(candidates.map((k) => doc[k]));
+    if (isNonEmpty(value)) return value;
   }
 
-  return firstNonEmpty([ca.description, ca.text, ca.rte]);
+  return undefined;
 }
 
 /* -------------------- export -------------------- */
