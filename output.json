@@ -524,7 +524,6 @@
   "ForContentAgeCalc": "2019-12-17T01:00:00.000Z",
   "ResultType": "Document",
   "ESC_AEMFULLPATH": "https://discovercontent.ey.net/content/cms/knowledge/knowledge-docs/2020/01/1/knd20011m3ajxby6.html",
-  "ESC_EYLASTMODIFIED": "2025-07-21T12:22:07.000Z",
   "ESC_EYCONTACT": [
     "Thomas Augustine"
   ],
@@ -544,5 +543,11 @@
   ],
   "ESC_EYEYAUTHORSEMAIL": [
     "Thomas.Augustine@in.ey.com"
-  ]
+  ],
+  "ESC_CREATED": "2025-07-21T12:47:37.000Z",
+  "ESC_CREATEDDATE": "2019-12-17T01:00:00.000Z",
+  "ESC_EXPIRYDATE": "2025-03-06T00:00:00.000Z",
+  "ESC_EYMAJORPUBDATE": "2019-12-17T01:00:00.000Z",
+  "ESC_LASTUPDATED": "2019-12-17T01:00:00.000Z",
+  "ESC_EYLASTMODIFIED": "2025-07-21T12:22:07.000Z"
 }

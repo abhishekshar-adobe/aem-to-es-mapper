@@ -63,14 +63,14 @@ function buildAemUrlFromPath(ctx) {
   return `https://discovercontent.ey.net${p}.html`;
 }
 
-function parseFlexibleDate(value) {
-  return parseAemDate(value);
-}
-
 /* -------------------- core rules -------------------- */
 
 function ParseDate(ctx) {
-  return parseFlexibleDate(ctx?.sourceValue);
+  return parseAemDate(ctx?.sourceValue);
+}
+
+function ParseDateGmtOrNative(ctx) {
+  return parseAemDate(ctx?.sourceValue);
 }
 
 function SplitKeywords(ctx) {
@@ -110,7 +110,7 @@ function MapVertical(ctx) {
     "EY Policy Guidance Page",
     "EY Method Document",
     "EY Data Visualization",
-    "EY Topic Page",
+    "EY Topic Page"
   ]);
 
   if (documentTypes.has(contentType)) return "Documents";
@@ -137,7 +137,7 @@ function ContentAge(ctx) {
     "EY Resource Catalogue item",
     "Policy Document",
     "EY Policy Page",
-    "EY Policy Guidance Page",
+    "EY Policy Guidance Page"
   ]);
 
   if (evergreen.has(contentType)) {
@@ -195,7 +195,7 @@ function MapResultType(ctx) {
     "EY Policy Page": "Page | Policy",
     "EY Knowledge Solution Page": "Page | Solution",
     "EY Topic Page": "Page | Topic",
-    "EY Video": "Video",
+    "EY Video": "Video"
   };
 
   if (map[contentType]) return map[contentType];
@@ -211,7 +211,7 @@ function BuildAEMUrl(ctx) {
   return buildAemUrlFromPath(ctx);
 }
 
-/* -------------------- flat-key helpers -------------------- */
+/* -------------------- flat-key extractors -------------------- */
 
 function findFlatKeysEndingWith(doc, suffix) {
   return Object.keys(doc || {}).filter((k) => k.endsWith(suffix));
@@ -251,7 +251,7 @@ function collectValuesFromTitleSection(doc, {
   titleSuffix,
   titleValue,
   valueSuffix,
-  dedupe = true,
+  dedupe = true
 }) {
   const results = [];
   const titleKeys = sortKeysByItemIndex(findFlatKeysEndingWith(doc, titleSuffix));
@@ -281,7 +281,7 @@ function collectValuesFromTitleSection(doc, {
 function collectValuesFromResourceTypeSection(doc, {
   resourceTypeValue,
   valueSuffix,
-  dedupe = true,
+  dedupe = true
 }) {
   const results = [];
   const resourceKeys = sortKeysByItemIndex(findFlatKeysEndingWith(doc, "/sling:resourceType"));
@@ -314,7 +314,7 @@ function ExtractContacts(ctx) {
     titleSuffix: "/contacts/title",
     titleValue: "Contact",
     valueSuffix: "/fullName",
-    dedupe: true,
+    dedupe: true
   });
 }
 
@@ -323,7 +323,7 @@ function ExtractContactEmails(ctx) {
     titleSuffix: "/contacts/title",
     titleValue: "Contact",
     valueSuffix: "/multiEmail",
-    dedupe: true,
+    dedupe: true
   });
 }
 
@@ -331,7 +331,7 @@ function ExtractSolutionLeaders(ctx) {
   return collectValuesFromResourceTypeSection(ctx?.aemDoc, {
     resourceTypeValue: "ey-internal-adobe-experience-app/components/contacts",
     valueSuffix: "/fullName",
-    dedupe: true,
+    dedupe: true
   });
 }
 
@@ -339,7 +339,7 @@ function ExtractSolutionLeaderEmails(ctx) {
   return collectValuesFromResourceTypeSection(ctx?.aemDoc, {
     resourceTypeValue: "ey-internal-adobe-experience-app/components/contacts",
     valueSuffix: "/multiEmail",
-    dedupe: false,
+    dedupe: false
   });
 }
 
@@ -348,7 +348,7 @@ function ExtractAuthors(ctx) {
     titleSuffix: "/authors/title",
     titleValue: "Authors",
     valueSuffix: "/fullName",
-    dedupe: true,
+    dedupe: true
   });
 }
 
@@ -357,7 +357,7 @@ function ExtractAuthorsEmail(ctx) {
     titleSuffix: "/authors/title",
     titleValue: "Authors",
     valueSuffix: "/multiEmail",
-    dedupe: true,
+    dedupe: true
   });
 }
 
@@ -374,7 +374,7 @@ function ExtractAbstract(ctx) {
     const candidates = [
       `${prefix}/contentabstract/description`,
       `${prefix}/contentabstract/text`,
-      `${prefix}/contentabstract/rte`,
+      `${prefix}/contentabstract/rte`
     ];
 
     const value = firstNonEmpty(candidates.map((k) => doc[k]));
@@ -388,6 +388,7 @@ function ExtractAbstract(ctx) {
 
 module.exports = {
   ParseDate,
+  ParseDateGmtOrNative,
   SplitKeywords,
   SplitEndorsements,
   ResolveLegacyOrId,
@@ -405,5 +406,5 @@ module.exports = {
   ExtractSolutionLeaderEmails,
   ExtractAuthors,
   ExtractAuthorsEmail,
-  ExtractAbstract,
+  ExtractAbstract
 };

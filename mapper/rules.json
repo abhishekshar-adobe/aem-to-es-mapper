@@ -159,7 +159,7 @@
   },
   "ESC_CATEGORYUID": {
     "type": "tag",
-    "tagType": "language",
+    "tagType": "category",
     "source": "cq:tag.cq:tagId"
   },
 
@@ -213,14 +213,11 @@
     "tagType": "service-line"
   },
 
-  "ESC_CREATED": { "type": "rule", "rule": { "ruleName": "ParseDate" } },
-  "ESC_CREATEDDATE": { "type": "rule", "rule": { "ruleName": "ParseDate" } },
   "ESC_ENTERPRISEKEYWORDS": {
     "type": "rule",
     "rule": { "ruleName": "SplitKeywords" }
   },
-  "ESC_EXPIRYDATE": { "type": "rule", "rule": { "ruleName": "ParseDate" } },
-  "ESC_EXTENDDATE": { "type": "rule", "rule": { "ruleName": "ParseDate" } },
+
   "ESC_EYDOCUMENTID": {
     "type": "rule",
     "rule": { "ruleName": "ResolveLegacyOrId" }
@@ -230,8 +227,6 @@
     "rule": { "ruleName": "SplitEndorsements" }
   },
   "ESC_EYFLAGSHIP": { "type": "rule", "rule": { "ruleName": "BooleanField" } },
-  "ESC_EYMAJORPUBDATE": { "type": "rule", "rule": { "ruleName": "ParseDate" } },
-  "ESC_LASTUPDATED": { "type": "rule", "rule": { "ruleName": "ParseDate" } },
   "ESC_MODIFIED": { "type": "rule", "rule": { "ruleName": "ParseDate" } },
   "ESC_ISTOMBSTONE": { "type": "rule", "rule": { "ruleName": "BooleanField" } },
   "ESC_VERTICAL": { "type": "rule", "rule": { "ruleName": "MapVertical" } },
@@ -244,11 +239,6 @@
   "ResultType": { "type": "rule", "rule": { "ruleName": "MapResultType" } },
   "ESC_AEMFULLPATH": { "type": "rule", "rule": { "ruleName": "BuildAEMUrl" } },
 
-  "ESC_EYLASTMODIFIED": {
-    "type": "rule",
-    "source": "cq:lastModified",
-    "rule": { "ruleName": "ParseDate" }
-  },
   "ESC_EYCONTACT": {
     "type": "rule",
     "rule": { "ruleName": "ExtractContacts" }
@@ -276,5 +266,41 @@
   "ESC_EYEYAUTHORSEMAIL": {
     "type": "rule",
     "rule": { "ruleName": "ExtractAuthorsEmail" }
+  },
+
+  "ESC_CREATED": {
+    "type": "rule",
+    "source": "jcr:created",
+    "rule": { "ruleName": "ParseDate" }
+  },
+  "ESC_CREATEDDATE": {
+    "type": "rule",
+    "source": "ey:created-date",
+    "rule": { "ruleName": "ParseDate" }
+  },
+  "ESC_EXPIRYDATE": {
+    "type": "rule",
+    "source": "ey:expiry-date",
+    "rule": { "ruleName": "ParseDate" }
+  },
+  "ESC_EXTENDDATE": {
+    "type": "rule",
+    "source": "ey:extend-date",
+    "rule": { "ruleName": "ParseDateGmtOrNative" }
+  },
+  "ESC_EYMAJORPUBDATE": {
+    "type": "rule",
+    "source": "ey:last-updated",
+    "rule": { "ruleName": "ParseDateGmtOrNative" }
+  },
+  "ESC_LASTUPDATED": {
+    "type": "rule",
+    "source": "ey:last-updated",
+    "rule": { "ruleName": "ParseDateGmtOrNative" }
+  },
+  "ESC_EYLASTMODIFIED": {
+    "type": "rule",
+    "source": "cq:lastModified",
+    "rule": { "ruleName": "ParseDateGmtOrNative" }
   }
 }

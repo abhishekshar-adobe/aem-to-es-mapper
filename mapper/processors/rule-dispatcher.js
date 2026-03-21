@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const rules = require('./rule-functions');
+const rules = require("./rule-functions");
 
 function runRule(ruleName, ctx) {
   if (!ruleName) return undefined;
@@ -12,7 +12,7 @@ function runRule(ruleName, ctx) {
 
   const fn = rules[ruleName];
 
-  if (typeof fn !== 'function') {
+  if (typeof fn !== "function") {
     console.warn(`⚠️ Rule is not a function: ${ruleName}`);
     return undefined;
   }
@@ -20,6 +20,4 @@ function runRule(ruleName, ctx) {
   return fn(ctx);
 }
 
-module.exports = {
-  runRule
-};
+module.exports = { runRule };
