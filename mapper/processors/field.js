@@ -1,5 +1,9 @@
 'use strict';
 function processField(result,key,cfg,ctx){
-  result[key] = ctx.aemDoc[cfg.source];
+  let value = ctx.aemDoc[cfg.source];
+  if (cfg.array === true && value !== undefined && value !== null && !Array.isArray(value)) {
+    value = [value];
+  }
+  result[key] = value;
 }
 module.exports = { processField };

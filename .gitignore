@@ -1,0 +1,6 @@
+output/
+node_modules/
+*.log
+# Ignore data files inside input subfolders but keep the folder structure
+input/**/*.json
+!input/README.txt

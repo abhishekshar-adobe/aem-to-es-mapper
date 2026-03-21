@@ -1,4 +1,10 @@
 {
+  "__postProcessing": {
+    "_comment": "Toggle post-processing filters applied to every field after mapping. Set a flag to true to enable.",
+    "trimWhitespace": true,
+    "stripHtml": true
+  },
+
   "ESC_CONTENTLOG": { "type": "field", "source": "ey:content-log" },
   "ESC_CONTENTTYPE": { "type": "field", "source": "ey:content-type" },
   "ESC_CQ_TAGS": { "type": "field", "source": "cq:tags" },
@@ -10,7 +16,7 @@
   "ESC_EYKREQUESTID": { "type": "field", "source": "ey:submission-id" },
   "ESC_EYLEGACYID": { "type": "field", "source": "ey:legacy-id" },
   "ESC_EYKNOWLEDGECONTACT": { "type": "field", "source": "ey:contactFullName" },
-  "ESC_EYKNOWLEDGECONTACTEMAIL": { "type": "field", "source": "ey:contact" },
+  "ESC_EYKNOWLEDGECONTACTEMAIL": { "type": "field", "source": "ey:contact", "array": true },
   "ESC_EXTENDCOUNT": { "type": "field", "source": "ey:extend-count" },
   "ESC_SUBMITTEREMAIL": { "type": "field", "source": "ey:submitter-email" },
   "ESC_TITLE": { "type": "field", "source": "jcr:title" },
@@ -40,7 +46,7 @@
   "ESC_CONTENTLANGUAGEUID": {
     "type": "tag",
     "tagType": "language",
-    "source": "cq:tag.cq:tagId"
+    "source": "cq:tags.value"
   },
   "ESC_CONTENTLIFECYCLEOWNERS": {
     "type": "tag",
@@ -50,7 +56,7 @@
   "ESC_CONTENTLIFECYCLEOWNERSUID": {
     "type": "tag",
     "tagType": "content-lifecycle-owner",
-    "source": "cq:tag.cq:tagId"
+    "source": "cq:tags.value"
   },
   "ESC_EYBUYER": {
     "type": "tag",
@@ -70,7 +76,7 @@
   "ESC_EYISSUESUID": {
     "type": "tag",
     "tagType": "solution",
-    "source": "cq:tag.cq:tagId"
+    "source": "cq:tags.value"
   },
   "ESC_EYKSOLUTIONALLIANCES": {
     "type": "tag",
@@ -80,7 +86,7 @@
   "ESC_EYKSOLUTIONALLIANCESUID": {
     "type": "tag",
     "tagType": "ey-partner-ecosystem",
-    "source": "cq:tag.cq:tagId"
+    "source": "cq:tags.value"
   },
   "ESC_EYMARKETSEGMENT": {
     "type": "tag",
@@ -95,7 +101,7 @@
   "ESC_GEOGRAPHICAPPLICABILITYUID": {
     "type": "tag",
     "tagType": "geography",
-    "source": "cq:tag.cq:tagId"
+    "source": "cq:tags.value"
   },
   "ESC_MANAGEDSERVICES": {
     "type": "tag",
@@ -110,7 +116,7 @@
   "ESC_ORIGINUID": {
     "type": "tag",
     "tagType": "geography",
-    "source": "cq:tag.cq:tagId"
+    "source": "cq:tags.value"
   },
   "ESC_SECTOR": {
     "type": "tag",
@@ -120,7 +126,7 @@
   "ESC_SECTORUID": {
     "type": "tag",
     "tagType": "industry",
-    "source": "cq:tag.cq:tagId"
+    "source": "cq:tags.value"
   },
   "ESC_SERVICELINEFUNCTION": {
     "type": "tag",
@@ -130,7 +136,7 @@
   "ESC_SERVICELINEFUNCTIONUID": {
     "type": "tag",
     "tagType": "service-line",
-    "source": "cq:tag.cq:tagId"
+    "source": "cq:tags.value"
   },
   "ESC_TECHPRODUCTS": {
     "type": "tag",
@@ -150,17 +156,17 @@
   "ESC_ORIGIN_ALT_LABEL": {
     "type": "tag",
     "tagType": "geography",
-    "source": "cq:tags.cq:tagId"
+    "source": "cq:tags.value"
   },
   "ESC_EYCONTENTTYPEUID": {
     "type": "tag",
     "tagType": "category",
-    "source": "cq:tag.cq:tagId"
+    "source": "cq:tags.value"
   },
   "ESC_CATEGORYUID": {
     "type": "tag",
     "tagType": "category",
-    "source": "cq:tag.cq:tagId"
+    "source": "cq:tags.value"
   },
 
   "ESC_CATEGORYUFPATH": { "type": "tag_path", "tagType": "category" },
@@ -200,7 +206,7 @@
   },
   "ESC_EYISSUES_HIDDEN_LABEL": {
     "type": "concept_tree",
-    "tagType": "service-line"
+    "tagType": "solution"
   },
   "ESC_GEOGRAPHICAPPLICABILITY_HIDDEN_LABEL": {
     "type": "concept_tree",
@@ -227,7 +233,7 @@
     "rule": { "ruleName": "SplitEndorsements" }
   },
   "ESC_EYFLAGSHIP": { "type": "rule", "rule": { "ruleName": "BooleanField" } },
-  "ESC_MODIFIED": { "type": "rule", "rule": { "ruleName": "ParseDate" } },
+  "ESC_MODIFIED": { "type": "rule", "source": "ey:last-replicated", "rule": { "ruleName": "ParseDate" } },
   "ESC_ISTOMBSTONE": { "type": "rule", "rule": { "ruleName": "BooleanField" } },
   "ESC_VERTICAL": { "type": "rule", "rule": { "ruleName": "MapVertical" } },
   "EYKIsEndorsed": { "type": "rule", "rule": { "ruleName": "IsEndorsed" } },
@@ -270,7 +276,7 @@
 
   "ESC_CREATED": {
     "type": "rule",
-    "source": "jcr:created",
+    "source": "jcr:page-created",
     "rule": { "ruleName": "ParseDate" }
   },
   "ESC_CREATEDDATE": {
@@ -302,5 +308,9 @@
     "type": "rule",
     "source": "cq:lastModified",
     "rule": { "ruleName": "ParseDateGmtOrNative" }
+  },
+  "ContactCalc": {
+    "type": "rule",
+    "rule": { "ruleName": "getContactCalc" }
   }
 }

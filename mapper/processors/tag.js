@@ -28,6 +28,7 @@ function getTagValue(tag, field) {
 
   if (field === 'jcr:title') return tag['jcr:title'] ?? tag.title;
   if (field === 'cq:tagId') return tag['cq:tagId'] ?? tag.tagId;
+  if (field === 'value') return tag['value'] ?? tag['cq:tagId'] ?? tag.tagId;
   if (field === 'altLabels') return tag.altLabels;
   if (field === 'hiddenLabels') return tag.hiddenLabels;
 
@@ -45,7 +46,6 @@ function isMatch(tag, tagType) {
 
 function processTag(result, key, cfg, ctx) {
   const rawTags =
-    ctx?.aemDoc?.['ESC_CQ_TAGS'] ||
     ctx?.aemDoc?.['cq:tags'] ||
     ctx?.aemDoc?.['cq:tag'] ||
     [];

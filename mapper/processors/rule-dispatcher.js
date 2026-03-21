@@ -1,23 +1,25 @@
-"use strict";
+'use strict';
 
-const rules = require("./rule-functions");
+const rules = require('./rule-functions');
 
+/**
+ * Execute a named rule and return a structured result.
+ * Returns { value, warning } — warning is null on success, a string on failure.
+ * Never throws; callers decide how to handle warnings.
+ */
 function runRule(ruleName, ctx) {
-  if (!ruleName) return undefined;
+  if (!ruleName) return { value: undefined, warning: null };
 
   if (!Object.prototype.hasOwnProperty.call(rules, ruleName)) {
-    console.warn(`⚠️ Rule not implemented: ${ruleName}`);
-    return undefined;
+    return { value: undefined, warning: `Rule not implemented: ${ruleName}` };
   }
 
   const fn = rules[ruleName];
-
-  if (typeof fn !== "function") {
-    console.warn(`⚠️ Rule is not a function: ${ruleName}`);
-    return undefined;
+  if (typeof fn !== 'function') {
+    return { value: undefined, warning: `Rule '${ruleName}' is not a function` };
   }
 
-  return fn(ctx);
+  return { value: fn(ctx), warning: null };
 }
 
 module.exports = { runRule };

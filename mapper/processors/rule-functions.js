@@ -1,14 +1,8 @@
-"use strict";
+'use strict';
+
+const { isNonEmpty, parseAemDate } = require('./utils');
 
 /* -------------------- helpers -------------------- */
-
-function isNonEmpty(value) {
-  return (
-    value !== undefined &&
-    value !== null &&
-    !(typeof value === "string" && value.trim() === "")
-  );
-}
 
 function splitAndTrim(value, delimiter) {
   if (!isNonEmpty(value)) return undefined;
@@ -19,46 +13,23 @@ function splitAndTrim(value, delimiter) {
 }
 
 function toBoolean(value) {
-  if (typeof value === "boolean") return value;
-  if (typeof value === "number") return value !== 0;
-  if (typeof value === "string") {
+  if (typeof value === 'boolean') return value;
+  if (typeof value === 'number') return value !== 0;
+  if (typeof value === 'string') {
     const v = value.trim().toLowerCase();
-    if (["true", "1", "yes", "y"].includes(v)) return true;
-    if (["false", "0", "no", "n", ""].includes(v)) return false;
+    if (['true', '1', 'yes', 'y'].includes(v)) return true;
+    if (['false', '0', 'no', 'n', ''].includes(v)) return false;
   }
   return Boolean(value);
 }
 
-function parseAemDate(value) {
-  if (!isNonEmpty(value)) return undefined;
-
-  const str = String(value).trim();
-
-  const direct = new Date(str);
-  if (!Number.isNaN(direct.getTime())) {
-    return direct.toISOString();
-  }
-
-  const cleaned = str
-    .replace(/'GMT'/g, "GMT")
-    .replace(/\s+\(.*\)$/, "")
-    .trim();
-
-  const secondTry = new Date(cleaned);
-  if (!Number.isNaN(secondTry.getTime())) {
-    return secondTry.toISOString();
-  }
-
-  return undefined;
-}
-
 function getPath(ctx, path) {
-  if (!ctx || typeof ctx.get !== "function") return undefined;
+  if (!ctx || typeof ctx.get !== 'function') return undefined;
   return ctx.get(path);
 }
 
 function buildAemUrlFromPath(ctx) {
-  const p = getPath(ctx, "jcr:path");
+  const p = getPath(ctx, 'jcr:path');
   if (!isNonEmpty(p)) return undefined;
   return `https://discovercontent.ey.net${p}.html`;
 }
@@ -96,115 +67,115 @@ function IsEndorsed(ctx) {
 }
 
 function MapVertical(ctx) {
-  const contentType = String(getPath(ctx, "ey:content-type") || "").trim();
+  const contentType = String(getPath(ctx, 'ey:content-type') || '').trim();
 
   const documentTypes = new Set([
-    "EY Knowledge Document",
-    "EY Knowledge Page",
-    "EY Knowledge FoP Page",
-    "EY Knowledge Buyer Page",
-    "EY Knowledge Solution Page",
-    "EY Resource Catalogue item",
-    "EY Policy Page",
-    "Policy Document",
-    "EY Policy Guidance Page",
-    "EY Method Document",
-    "EY Data Visualization",
-    "EY Topic Page"
+    'EY Knowledge Document',
+    'EY Knowledge Page',
+    'EY Knowledge FoP Page',
+    'EY Knowledge Buyer Page',
+    'EY Knowledge Solution Page',
+    'EY Resource Catalogue item',
+    'EY Policy Page',
+    'Policy Document',
+    'EY Policy Guidance Page',
+    'EY Method Document',
+    'EY Data Visualization',
+    'EY Topic Page'
   ]);
 
-  if (documentTypes.has(contentType)) return "Documents";
-  if (contentType === "EY Video") return "Videos";
-  if (contentType === "EY Credential List Item") return "Credentials";
-  return "";
+  if (documentTypes.has(contentType)) return 'Documents';
+  if (contentType === 'EY Video') return 'Videos';
+  if (contentType === 'EY Credential List Item') return 'Credentials';
+  return '';
 }
 
 function ContentRestriction(ctx) {
-  const contentType = String(getPath(ctx, "ey:content-type") || "").trim();
+  const contentType = String(getPath(ctx, 'ey:content-type') || '').trim();
 
-  if (contentType === "0" || contentType === "") return "NoRestrict";
-  if (contentType === "1") return "AIOnly";
-  if (contentType === "2") return "AISearchOnly";
-  return "NoRestrict";
+  if (contentType === '0' || contentType === '') return 'NoRestrict';
+  if (contentType === '1') return 'AIOnly';
+  if (contentType === '2') return 'AISearchOnly';
+  return 'NoRestrict';
 }
 
 function ContentAge(ctx) {
-  const contentType = String(getPath(ctx, "ey:content-type") || "").trim();
+  const contentType = String(getPath(ctx, 'ey:content-type') || '').trim();
 
   const evergreen = new Set([
-    "EY Knowledge Solution Page",
-    "EY Knowledge FoP Page",
-    "EY Resource Catalogue item",
-    "Policy Document",
-    "EY Policy Page",
-    "EY Policy Guidance Page"
+    'EY Knowledge Solution Page',
+    'EY Knowledge FoP Page',
+    'EY Resource Catalogue item',
+    'Policy Document',
+    'EY Policy Page',
+    'EY Policy Guidance Page'
   ]);
 
   if (evergreen.has(contentType)) {
-    return "2099-12-31T00:00:00.000Z";
+    return '2099-12-31T00:00:00.000Z';
   }
 
   return (
-    parseAemDate(getPath(ctx, "ey:last-updated")) ||
-    parseAemDate(getPath(ctx, "jcr:created")) ||
+    parseAemDate(getPath(ctx, 'ey:last-updated')) ||
+    parseAemDate(getPath(ctx, 'jcr:created')) ||
     undefined
   );
 }
 
 function MapResultType(ctx) {
-  const contentType = String(getPath(ctx, "ey:content-type") || "").trim();
-  const assetType = String(getPath(ctx, "eykdassettype") || "").trim();
+  const contentType = String(getPath(ctx, 'ey:content-type') || '').trim();
+  const assetType = String(getPath(ctx, 'eykdassettype') || '').trim();
 
-  if (contentType === "EY Resource Catalogue item") {
-    const targetUrl = getPath(ctx, "ey:target-url") || "";
-    if (!targetUrl) return "Site";
+  if (contentType === 'EY Resource Catalogue item') {
+    const targetUrl = getPath(ctx, 'ey:target-url') || '';
+    if (!targetUrl) return 'Site';
 
     try {
       const u = new URL(targetUrl);
-      const host = u.host || "";
-      if (host.includes("sites.ey.com") || host.includes("sharepoint.com")) {
-        return "Site | Sharepoint";
+      const host = u.host || '';
+      if (host.includes('sites.ey.com') || host.includes('sharepoint.com')) {
+        return 'Site | Sharepoint';
       }
-      return "Site";
+      return 'Site';
     } catch {
       const clean = String(targetUrl)
-        .replace(/^https?:\/\//i, "")
-        .split("/")[0];
+        .replace(/^https?:\/\//i, '')
+        .split('/')[0];
 
-      if (clean.includes("sites.ey.com") || clean.includes("sharepoint.com")) {
-        return "Site | Sharepoint";
+      if (clean.includes('sites.ey.com') || clean.includes('sharepoint.com')) {
+        return 'Site | Sharepoint';
       }
-      return "Site";
+      return 'Site';
     }
   }
 
   const map = {
-    "EY Knowledge Document": "Document",
-    "EY Credential list item": "Credential",
-    "EY Data Visualization": "Document | Data Vis",
-    "EY Method Document": "Document | Method",
-    "Policy Document": "Document | Policy",
-    "EY-P Engagement item": "EY-P | Engagement",
-    "EY-P Perspective Document": "EY-P | Perspective",
-    "Intranet News Article": "News | Article",
-    "Intranet News Video": "News | Video",
-    "EY Knowledge Page": "Page",
-    "EY Knowledge FoP Page": "Page | BBFoP",
-    "EY Knowledge Buyer Page": "Page | Buyer",
-    "Intranet Content Page": "Page | Intranet",
-    "EY Policy Page": "Page | Policy",
-    "EY Knowledge Solution Page": "Page | Solution",
-    "EY Topic Page": "Page | Topic",
-    "EY Video": "Video"
+    'EY Knowledge Document': 'Document',
+    'EY Credential list item': 'Credential',
+    'EY Data Visualization': 'Document | Data Vis',
+    'EY Method Document': 'Document | Method',
+    'Policy Document': 'Document | Policy',
+    'EY-P Engagement item': 'EY-P | Engagement',
+    'EY-P Perspective Document': 'EY-P | Perspective',
+    'Intranet News Article': 'News | Article',
+    'Intranet News Video': 'News | Video',
+    'EY Knowledge Page': 'Page',
+    'EY Knowledge FoP Page': 'Page | BBFoP',
+    'EY Knowledge Buyer Page': 'Page | Buyer',
+    'Intranet Content Page': 'Page | Intranet',
+    'EY Policy Page': 'Page | Policy',
+    'EY Knowledge Solution Page': 'Page | Solution',
+    'EY Topic Page': 'Page | Topic',
+    'EY Video': 'Video'
   };
 
   if (map[contentType]) return map[contentType];
 
-  if (assetType === "Data Product") return "Data | Product";
-  if (assetType === "Data Provider") return "Data | Provider";
-  if (assetType === "Data Set") return "Data | Set";
+  if (assetType === 'Data Product') return 'Data | Product';
+  if (assetType === 'Data Provider') return 'Data | Provider';
+  if (assetType === 'Data Set') return 'Data | Set';
 
-  return "";
+  return '';
 }
 
 function BuildAEMUrl(ctx) {
@@ -311,64 +282,64 @@ function collectValuesFromResourceTypeSection(doc, {
 
 function ExtractContacts(ctx) {
   return collectValuesFromTitleSection(ctx?.aemDoc, {
-    titleSuffix: "/contacts/title",
-    titleValue: "Contact",
-    valueSuffix: "/fullName",
+    titleSuffix: '/contacts/title',
+    titleValue: 'Contact',
+    valueSuffix: '/fullName',
     dedupe: true
   });
 }
 
 function ExtractContactEmails(ctx) {
   return collectValuesFromTitleSection(ctx?.aemDoc, {
-    titleSuffix: "/contacts/title",
-    titleValue: "Contact",
-    valueSuffix: "/multiEmail",
+    titleSuffix: '/contacts/title',
+    titleValue: 'Contact',
+    valueSuffix: '/multiEmail',
     dedupe: true
   });
 }
 
 function ExtractSolutionLeaders(ctx) {
   return collectValuesFromResourceTypeSection(ctx?.aemDoc, {
-    resourceTypeValue: "ey-internal-adobe-experience-app/components/contacts",
-    valueSuffix: "/fullName",
+    resourceTypeValue: 'ey-internal-adobe-experience-app/components/contacts',
+    valueSuffix: '/fullName',
     dedupe: true
   });
 }
 
 function ExtractSolutionLeaderEmails(ctx) {
   return collectValuesFromResourceTypeSection(ctx?.aemDoc, {
-    resourceTypeValue: "ey-internal-adobe-experience-app/components/contacts",
-    valueSuffix: "/multiEmail",
+    resourceTypeValue: 'ey-internal-adobe-experience-app/components/contacts',
+    valueSuffix: '/multiEmail',
     dedupe: false
   });
 }
 
 function ExtractAuthors(ctx) {
   return collectValuesFromTitleSection(ctx?.aemDoc, {
-    titleSuffix: "/authors/title",
-    titleValue: "Authors",
-    valueSuffix: "/fullName",
+    titleSuffix: '/authors/title',
+    titleValue: 'Authors',
+    valueSuffix: '/fullName',
     dedupe: true
   });
 }
 
 function ExtractAuthorsEmail(ctx) {
   return collectValuesFromTitleSection(ctx?.aemDoc, {
-    titleSuffix: "/authors/title",
-    titleValue: "Authors",
-    valueSuffix: "/multiEmail",
+    titleSuffix: '/authors/title',
+    titleValue: 'Authors',
+    valueSuffix: '/multiEmail',
     dedupe: true
   });
 }
 
 function ExtractAbstract(ctx) {
   const doc = ctx?.aemDoc || {};
-  const titleKeys = sortKeysByItemIndex(findFlatKeysEndingWith(doc, "/contentabstract/title"));
+  const titleKeys = sortKeysByItemIndex(findFlatKeysEndingWith(doc, '/contentabstract/title'));
 
   for (const titleKey of titleKeys) {
-    if (doc[titleKey] !== "Description") continue;
+    if (doc[titleKey] !== 'Description') continue;
 
-    const prefix = getParentPrefix(titleKey, "/contentabstract/title");
+    const prefix = getParentPrefix(titleKey, '/contentabstract/title');
     if (!prefix) continue;
 
     const candidates = [
@@ -382,6 +353,29 @@ function ExtractAbstract(ctx) {
   }
 
   return undefined;
+}
+
+/* -------------------- ContactCalc -------------------- */
+
+/**
+ * Collect fullName values from all flat AEM doc keys whose path contains
+ * 'authors/emailids' — e.g. root/.../authors/emailids/item0/fullName
+ */
+function getContactCalc(ctx) {
+  const doc = ctx?.aemDoc || {};
+
+  const matchingKeys = sortKeysByItemIndex(
+    Object.keys(doc).filter(
+      (k) => k.includes('authors/emailids') && k.endsWith('/fullName')
+    )
+  );
+
+  const results = [];
+  for (const k of matchingKeys) {
+    if (isNonEmpty(doc[k])) results.push(doc[k]);
+  }
+
+  return results.length ? dedupeValues(results) : undefined;
 }
 
 /* -------------------- export -------------------- */
@@ -406,5 +400,6 @@ module.exports = {
   ExtractSolutionLeaderEmails,
   ExtractAuthors,
   ExtractAuthorsEmail,
-  ExtractAbstract
+  ExtractAbstract,
+  getContactCalc
 };

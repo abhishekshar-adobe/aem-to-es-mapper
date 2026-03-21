@@ -17,7 +17,17 @@ function processRule(result, key, cfg, ctx) {
     get: (p) => getByPath(ctx.aemDoc, p)
   };
 
-  result[key] = runRule(ruleName, ruleCtx);
+  const { value, warning } = runRule(ruleName, ruleCtx);
+  result[key] = value;
+
+  if (warning && ctx.meta) {
+    ctx.meta.warnings.push({
+      key,
+      ruleName,
+      message: warning,
+      type: warning.startsWith('Rule not implemented') ? 'unimplemented' : 'rule-error'
+    });
+  }
 }
 
 module.exports = { processRule };

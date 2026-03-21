@@ -1,0 +1,22 @@
+{
+  "name": "aem-es-mapper",
+  "version": "1.0.0",
+  "description": "Rule-driven AEM to Elasticsearch document mapper",
+  "main": "mapper/index.js",
+  "exports": {
+    ".": "./mapper/index.js",
+    "./reporter": "./reporter/diff-reporter.js"
+  },
+  "bin": {
+    "aem-es-mapper": "./main.js"
+  },
+  "scripts": {
+    "start": "node main.js --input ./input ./mapper/rules.json",
+    "run:single": "node main.js input/sample/aem.json input/sample/conceptTree.json ./mapper/rules.json output/single/output.json",
+    "clean": "rm -rf output"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "license": "MIT"
+}
