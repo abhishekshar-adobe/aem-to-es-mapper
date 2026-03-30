@@ -148,16 +148,6 @@
     "tagType": "topic",
     "source": "cq:tags.jcr:title"
   },
-  "ESC_GEOGRAPHICAPPLICABILITY_ALT_LABEL": {
-    "type": "tag",
-    "tagType": "geography",
-    "source": "cq:tags.jcr:title"
-  },
-  "ESC_ORIGIN_ALT_LABEL": {
-    "type": "tag",
-    "tagType": "geography",
-    "source": "cq:tags.value"
-  },
   "ESC_EYCONTENTTYPEUID": {
     "type": "tag",
     "tagType": "category",
@@ -312,5 +302,29 @@
   "ContactCalc": {
     "type": "rule",
     "rule": { "ruleName": "getContactCalc" }
+  },
+
+  "ESC_GEOGRAPHICAPPLICABILITY_ALT_LABEL": {
+    "type": "rule",
+    "tagType": "geography",
+    "rule": {
+      "ruleName": "GetAltLabelsFromConceptTree"
+    }
+  },
+
+  "ESC_ORIGIN_ALT_LABEL": {
+    "type": "rule",
+    "tagType": "geography",
+    "rule": {
+      "ruleName": "GetAltLabelsFromConceptTree"
+    }
+  },
+
+  "ESC_SECTOR_ALT_LABEL": {
+    "type": "rule",
+    "tagType": "industry",
+    "rule": {
+      "ruleName": "GetAltLabelsFromConceptTree"
+    }
   }
 }

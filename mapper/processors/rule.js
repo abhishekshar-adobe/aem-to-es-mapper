@@ -13,6 +13,7 @@ function processRule(result, key, cfg, ctx) {
 
   const ruleCtx = {
     ...ctx,
+    tagType: cfg.tagType,
     sourceValue: getByPath(ctx.aemDoc, cfg.source),
     get: (p) => getByPath(ctx.aemDoc, p)
   };
